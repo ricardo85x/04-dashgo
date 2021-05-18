@@ -22,6 +22,7 @@ export default function UserList() {
 
                         <Button
                             as="a"
+                            href="/users/create"
                             size="sm"
                             fontSize="sm"
                             colorScheme="pink"

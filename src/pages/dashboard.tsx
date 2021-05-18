@@ -3,6 +3,7 @@ import { Header } from "../components/Header"
 import { Sidebar } from '../components/Sidebar'
 import dynamic from 'next/dynamic'
 import { ApexOptions } from 'apexcharts'
+import { Pagination } from '../components/Pagination'
 
 
 const Chart = dynamic( () => import('react-apexcharts'), {

@@ -6,6 +6,7 @@ import { ApexOptions } from 'apexcharts'
 import { Pagination } from '../components/Pagination'
 
 
+
 const Chart = dynamic( () => import('react-apexcharts'), {
     ssr: false,
 })

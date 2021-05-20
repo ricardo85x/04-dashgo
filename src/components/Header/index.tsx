@@ -28,7 +28,7 @@ export function Header() {
             mx="auto"
             mt="4"
             align="center"
-            px="6"
+            px={["2", "4", "6"]} 
         >
             { !isWideVersion && (
                 <IconButton

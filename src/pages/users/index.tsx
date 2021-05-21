@@ -5,6 +5,7 @@ import { RiAddLine, RiPencilFill } from "react-icons/ri";
 import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
+import Link from 'next/link'
 
 export default function UserList() {
 
@@ -29,28 +30,32 @@ export default function UserList() {
 
                         {isWideVersion ? (
 
-                            <Button
+                            <Link href="/users/create" passHref
+                            >
 
-                                as="a"
-                                href="/users/create"
-                                size="sm"
-                                fontSize="sm"
-                                colorScheme="pink"
+                                <Button
 
-                                leftIcon={<Icon as={RiAddLine} fontSize="20" />}
+                                    as="a"
+                                    size="sm"
+                                    fontSize="sm"
+                                    colorScheme="pink"
 
+                                    leftIcon={<Icon as={RiAddLine} fontSize="20" />}
 
-                            >Criar novo usuário</Button>
+                                >Criar novo usuário</Button>
+                            </Link>
+
 
                         ) : (
-                            <IconButton
-                                aria-label="Criar novo usuário"
-                                icon={<RiAddLine />}
-                                fontSize="16"
-                                size="sm"
-                                colorScheme="pink"
-                                href="/users/create"
-                            />
+                            <Link href="/users/create" passHref>
+                                <IconButton
+                                    aria-label="Criar novo usuário"
+                                    icon={<RiAddLine />}
+                                    fontSize="16"
+                                    size="sm"
+                                    colorScheme="pink"
+                                />
+                            </Link>
                         )}
 
 
@@ -72,7 +77,7 @@ export default function UserList() {
                                 <Td px={["2", "4", "6"]} >
                                     <Checkbox colorScheme="pink" />
                                 </Td>
-                                <Td  px={["2", "4", "6"]} > 
+                                <Td px={["2", "4", "6"]} >
                                     <Box>
                                         <Text fontWeight="bold">Ricardo F</Text>
                                         <Text fontSize="sm" color="gray.300">ricardo85x@gmail.com F</Text>
@@ -95,13 +100,13 @@ export default function UserList() {
                                     ) : (
                                         <IconButton
                                             aria-label="Editar"
-                                            icon={<RiPencilFill/>}
+                                            icon={<RiPencilFill />}
                                             fontSize="16"
                                             size="sm"
-                                         
+
 
                                             colorScheme="pink"
-                                            href="/users/create"
+                                            
                                         />
                                     )}
 

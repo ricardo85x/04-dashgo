@@ -1,6 +1,7 @@
 import { Flex, Box, Divider, Heading, VStack, SimpleGrid, HStack, Button } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
+import Router  from "next/router";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from 'yup'
@@ -27,9 +28,11 @@ export default function CreateUser() {
 
 
     const handleCreateUser: SubmitHandler<CreateUserFormData> = async values => {
+        console.log(values)
 
         await new Promise(resolve => setTimeout(resolve, 2000));
-        console.log(values)
+
+        Router.push("/users")
     }
 
     const {register, handleSubmit, formState} = useForm({

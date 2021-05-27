@@ -5,6 +5,8 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Input } from "../components/Form/Input"
 
+import Router from 'next/router'
+
 type SingInFormData = {
   email: string;
   password: string
@@ -24,10 +26,10 @@ export default function SignIn() {
 
   const  handleSignIn:SubmitHandler<SingInFormData> = async (data) => {
 
-
-    await new Promise( resolve => setTimeout( resolve, 2000))
-
     console.log(data)
+    await new Promise( resolve => setTimeout( resolve, 2000))
+    Router.push("/dashboard")
+
   }
 
   return (

@@ -9,12 +9,32 @@ import Link from 'next/link'
 import { useEffect } from "react";
 import { useQuery } from "react-query"
 
+type UserProps = {
+    users: {
+        id: string;
+        name: string;
+        email: string;
+        createdAt: string;
+    }[]
+}
+
 export default function UserList() {
 
     const { data, isLoading, error } = useQuery('users', async () => {
         const response = await fetch("/api/users")
-        const data = response.json();
-        return data
+        const data = await (response.json() as Promise<UserProps>);
+
+        const users = data.users.map(user => {
+            return {
+                ...user,
+                createdAt: new Date(user.createdAt).toLocaleDateString('pt-BR', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric'
+                })
+            }
+        })
+        return users
     })
 
     const isWideVersion = useBreakpointValue({
@@ -89,17 +109,18 @@ export default function UserList() {
                                 </Tr>
                             </Thead>
                             <Tbody>
-                                <Tr>
+                               { data.map(user => (
+                                    <Tr key={user.id}>
                                     <Td px={["2", "4", "6"]} >
                                         <Checkbox colorScheme="pink" />
                                     </Td>
                                     <Td px={["2", "4", "6"]} >
                                         <Box>
-                                            <Text fontWeight="bold">Ricardo F</Text>
-                                            <Text fontSize="sm" color="gray.300">ricardo85x@gmail.com F</Text>
+                                            <Text fontWeight="bold">{user.name}</Text>
+                                            <Text fontSize="sm" color="gray.300">{user.email}</Text>
                                         </Box>
                                     </Td>
-                                    {isWideVersion && <Td>17 de Maio, 2021</Td>}
+                                    {isWideVersion && <Td>{user.createdAt}</Td>}
                                     <Td>
 
                                         {isWideVersion ? (
@@ -130,6 +151,7 @@ export default function UserList() {
                                 </Tr>
 
 
+                               ) )}
                             </Tbody>
                         </Table>
                         <Pagination />

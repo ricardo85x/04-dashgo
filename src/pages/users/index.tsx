@@ -8,21 +8,22 @@ import { Sidebar } from "../../components/Sidebar";
 import Link from 'next/link'
 import { useEffect } from "react";
 import { useQuery } from "react-query"
+import { api } from "../../services/api";
 
 type UserProps = {
+
     users: {
         id: string;
         name: string;
         email: string;
         createdAt: string;
-    }[]
+    }[]  
 }
 
 export default function UserList() {
 
     const { data, isLoading, isFetching, error } = useQuery('users', async () => {
-        const response = await fetch("/api/users")
-        const data = await (response.json() as Promise<UserProps>);
+        const { data } = await api.get<UserProps>("users")
 
         const users = data.users.map(user => {
             return {
@@ -34,6 +35,7 @@ export default function UserList() {
                 })
             }
         })
+
         return users
     }, {
         staleTime: 1000 * 5 // 5 seconds
@@ -44,7 +46,7 @@ export default function UserList() {
         lg: true,
     })
 
-    console.log("LE Query", data)
+    // console.log("LE Query", data)
 
     return (
         <Box>

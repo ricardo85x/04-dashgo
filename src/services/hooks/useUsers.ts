@@ -43,5 +43,5 @@ export const getUsers = async ( page: number, perPage: number) => {
 
 
 export const useUsers = (currentPage: number, perPage: number) => useQuery(['users', {currentPage, perPage}], () => getUsers(currentPage, perPage), {
-    staleTime: 1000 * 5 // 5 seconds
+    staleTime: 1000 * 60 * 10 // 10 minutes
 })

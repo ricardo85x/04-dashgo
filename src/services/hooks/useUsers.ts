@@ -9,11 +9,20 @@ type User = {
 }
 
 type UserApiProps = {
-    users: User[]  
+    users: User[],
+    totalCount: number;
+
 }
 
-export const getUsers = async () => {
-    const { data } = await api.get<UserApiProps>("users")
+export const getUsers = async ( page: number, perPage: number) => {
+    const { data, headers } = await api.get<UserApiProps>("users", {
+        params: {
+            page,
+            perPage
+        }
+    })
+
+    const totalCount = Number(headers['x-total-count']) ;
 
     const users = data.users.map(user => {
         return {
@@ -26,10 +35,13 @@ export const getUsers = async () => {
         }
     })
 
-    return users
+    return {
+        totalCount,
+        users
+    }
 }
 
 
-export const useUsers = () => useQuery('users', getUsers, {
+export const useUsers = (currentPage: number, perPage: number) => useQuery(['users', {currentPage, perPage}], () => getUsers(currentPage, perPage), {
     staleTime: 1000 * 5 // 5 seconds
 })

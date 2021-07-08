@@ -1,6 +1,6 @@
 import { Box, Heading, Text } from "@chakra-ui/layout";
 import { Button, IconButton, Checkbox, Flex, Icon, Table, Tbody, Td, Th, Thead, Tr, useBreakpointValue, Spinner } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import { RiAddLine, RiPencilFill } from "react-icons/ri";
 import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
@@ -11,7 +11,11 @@ import { useUsers } from "../../services/hooks/useUsers";
 
 export default function UserList() {
 
-    const { data, isLoading, isFetching, error } =  useUsers()
+    const [currentPage, setCurrentPage] = useState(1)
+
+    const registerPerPage = 3;
+
+    const { data, isLoading, isFetching, error } =  useUsers(currentPage, registerPerPage)
 
     const isWideVersion = useBreakpointValue({
         base: false,
@@ -19,6 +23,8 @@ export default function UserList() {
     })
 
     // console.log("LE Query", data)
+
+    console.log("currentPage", currentPage)
 
     return (
         <Box>
@@ -88,7 +94,7 @@ export default function UserList() {
                                 </Tr>
                             </Thead>
                             <Tbody>
-                               { data.map(user => (
+                               { data.users.map(user => (
                                     <Tr key={user.id}>
                                     <Td px={["2", "4", "6"]} >
                                         <Checkbox colorScheme="pink" />
@@ -134,9 +140,10 @@ export default function UserList() {
                             </Tbody>
                         </Table>
                         <Pagination 
-                            totalCountOfRegisters={200}
-                            currentPage={19}
-                            onPageChange={() =>  {}}
+                            totalCountOfRegisters={data.totalCount}
+                            registerPerPage={registerPerPage}
+                            currentPage={currentPage}
+                            onPageChange={setCurrentPage}
                         />
                     </>
 

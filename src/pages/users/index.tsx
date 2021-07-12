@@ -26,6 +26,9 @@ export default function UserList( { users }: UserListProps ) {
         initialData: users,
     })
 
+
+    console.log("DEBUG VERCEL", data)
+
     const isWideVersion = useBreakpointValue({
         base: false,
         lg: true,
@@ -109,7 +112,7 @@ export default function UserList( { users }: UserListProps ) {
                                     </Tr>
                                 </Thead>
                                 <Tbody>
-                                    {data.users.map(user => (
+                                    {data?.users?.map(user => (
                                         <Tr key={user.id}>
                                             <Td px={["2", "4", "6"]} >
                                                 <Checkbox colorScheme="pink" />

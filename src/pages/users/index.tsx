@@ -6,18 +6,25 @@ import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
 import NextLink from 'next/link'
-import { useUsers } from "../../services/hooks/useUsers";
+import { getUsers, useUsers } from "../../services/hooks/useUsers";
 import { queryClient } from "../../services/queryClient";
 import { api } from "../../services/api";
+import { GetServerSideProps } from "next";
 
+import {User} from "../../services/hooks/useUsers"
 
-export default function UserList() {
+interface UserListProps {
+    users: User[];
+}
+
+const registerPerPage = 3;
+export default function UserList( { users }: UserListProps ) {
 
     const [currentPage, setCurrentPage] = useState(1)
 
-    const registerPerPage = 3;
-
-    const { data, isLoading, isFetching, error } = useUsers(currentPage, registerPerPage)
+    const { data, isLoading, isFetching, error } = useUsers(currentPage, registerPerPage, {
+        initialData: users,
+    })
 
     const isWideVersion = useBreakpointValue({
         base: false,
@@ -169,4 +176,20 @@ export default function UserList() {
 
         </Box>
     )
+}
+
+export const getServerSideProps : GetServerSideProps = async () => {
+
+    /// @dev the getUsers will fail because it is using Mirage
+    /// Mirage runs only on browser, so this server call will fail
+    /// When you migrate to a actual server you can remove the comment
+    /// from the next line
+
+    // const {users, totalCount } = await getUsers(1, registerPerPage)
+
+    return {
+        props: {
+            users: []
+        }
+    }
 }

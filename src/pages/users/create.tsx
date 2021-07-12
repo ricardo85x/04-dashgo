@@ -48,7 +48,10 @@ export default function CreateUser() {
 
 
     const handleCreateUser: SubmitHandler<CreateUserFormData> = async values => {
-        await createUser.mutateAsync(values)
+
+        console.log("DEBUG 2 handleCreateUser",values )
+        const _create = await createUser.mutateAsync(values)
+        console.log("DEBUG 3 handleCreateUser",_create )
 
         router.push('/users')
     }

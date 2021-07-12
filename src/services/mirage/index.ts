@@ -39,7 +39,7 @@ export function makeServer() {
         },
 
         routes(){
-            this.namespace = 'api'
+            this.namespace = 'mirage' // debug vercel
             this.timing = 750; // ms
             this.get('/users', function(schema, request) {
                 const { page = 1 , perPage = 10 } = request.queryParams;
@@ -66,8 +66,8 @@ export function makeServer() {
             this.get('/users/:id')
             this.post('/users')
             this.namespace = ''
-        //    this.passthrough()
-        // DEBUG MIRAGE
+            this.passthrough()
+       
         }
     })
 
